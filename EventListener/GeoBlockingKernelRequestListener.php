@@ -166,7 +166,7 @@ class GeoBlockingKernelRequestListener
     {
         // render the "sorry you are not allowed here"-page
         $parameters = array('loginRoute' => $this->configParams['loginRoute'], 'country' => $country);
-        $event->setResponse($this->templating->renderResponse($this->configParams['blockedPageView'], $parameters, new Response('', Response::HTTP_FORBIDDEN)));
+        $event->setResponse($this->templating->render($this->configParams['blockedPageView'], $parameters, new Response('', Response::HTTP_FORBIDDEN)));
         $event->stopPropagation();
 
         if ($this->configParams['logBlockedRequests']) {
