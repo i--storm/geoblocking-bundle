@@ -78,7 +78,7 @@ class GeoBlockingKernelRequestListener
         }
 
         //$visitorAddress = $request->getClientIp();
-        $visitorAddress = $this->getClientIp();
+        $visitorAddress = $this->getClientIp($request);
 
         //$this->logger->info("azine_geoblocking_bundle: HEADERS");
         //$this->logger->info(print_r($request->headers->all(), true));
@@ -262,7 +262,7 @@ class GeoBlockingKernelRequestListener
         return $is_bad_ip;
     }
 
-    public function getClientIp()
+    public function getClientIp($request)
     {
         if (!empty($_SERVER['HTTP_CLIENT_IP']) && !$this->isBadIp($_SERVER['HTTP_CLIENT_IP'])) { // check ip from share internet
             $ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -273,11 +273,7 @@ class GeoBlockingKernelRequestListener
         }elseif(!empty($_SERVER['REMOTE_ADDR']) && !$this->isBadIp($_SERVER['REMOTE_ADDR'])) {
             $ip = $_SERVER['REMOTE_ADDR'];
         }else{
-            $ip='';
-
-            $this->writeLog("===== Address not determined ======\n");
-            $this->writeLog($ip."\n");
-            $this->writeLog(print_r($_SERVER, true)."\n");
+            $ip = $request->getClientIp();
         }
 
         return $ip;
