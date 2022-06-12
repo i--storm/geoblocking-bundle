@@ -77,10 +77,11 @@ class GeoBlockingKernelRequestListener
         	return;
         }
 
-        $visitorAddress = $request->getClientIp();
+        //$visitorAddress = $request->getClientIp();
+        $visitorAddress = $this->getClientIp();
 
-        $this->logger->info("azine_geoblocking_bundle: HEADERS");
-        $this->logger->info(print_r($request->headers->all(), true));
+        //$this->logger->info("azine_geoblocking_bundle: HEADERS");
+        //$this->logger->info(print_r($request->headers->all(), true));
 
         // check if the visitors IP is a private IP => the request comes from the same subnet as the server or the server it self.
         if ($this->configParams['allowPrivateIPs']) {
@@ -233,5 +234,52 @@ class GeoBlockingKernelRequestListener
         }
 
         return false;
+    }
+
+    private function isBadIp($ip){
+        $bad_ips=array(
+
+        );
+
+        $is_bad_ip=false;
+
+        foreach ($bad_ips as $bad_ip){
+            if(strpos($ip,$bad_ip)===0){
+                $is_bad_ip=true;
+                break;
+            }
+        }
+
+        if($is_bad_ip){
+            return $is_bad_ip;
+        }
+
+        $re = '/^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\.(?!$)|$)){4}$/';
+        if(preg_match($re, $ip)===0){
+            $is_bad_ip=true;
+        }
+
+        return $is_bad_ip;
+    }
+
+    public function getClientIp()
+    {
+        if (!empty($_SERVER['HTTP_CLIENT_IP']) && !$this->isBadIp($_SERVER['HTTP_CLIENT_IP'])) { // check ip from share internet
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']) && !$this->isBadIp($_SERVER['HTTP_X_FORWARDED_FOR'])) { // to check ip is pass from proxy
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } elseif (!empty($_SERVER['HTTP_X_REAL_IP']) && !$this->isBadIp($_SERVER['HTTP_X_REAL_IP']) ) {
+            $ip = $_SERVER['HTTP_X_REAL_IP'];
+        }elseif(!empty($_SERVER['REMOTE_ADDR']) && !$this->isBadIp($_SERVER['REMOTE_ADDR'])) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }else{
+            $ip='';
+
+            $this->writeLog("===== Address not determined ======\n");
+            $this->writeLog($ip."\n");
+            $this->writeLog(print_r($_SERVER, true)."\n");
+        }
+
+        return $ip;
     }
 }
