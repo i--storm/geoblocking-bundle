@@ -35,3 +35,9 @@ services:
             class: Azine\GeoBlockingBundle\Adapter\MaxmindLookupAdapter
             arguments:
                 $container:  "@service_container"
+
+    azine_geo_blocking.maxmind2.lookup.adapter:
+        class: Azine\GeoBlockingBundle\Adapter\Maxmind2LookupAdapter
+        arguments:
+            $container:  "@service_container"
+            $path: '$env(GEOIP_DATA_FILE_PATH)$'
