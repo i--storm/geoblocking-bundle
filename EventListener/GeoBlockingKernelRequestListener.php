@@ -162,7 +162,7 @@ class GeoBlockingKernelRequestListener
      * @param GetResponseEvent $event
      * @param string           $country
      */
-    private function blockAccess(GetResponseEvent $event, $country)
+    private function blockAccess(RequestEvent $event, $country)
     {
         // render the "sorry you are not allowed here"-page
         $parameters = array('loginRoute' => $this->configParams['loginRoute'], 'country' => $country);
