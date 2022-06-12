@@ -79,6 +79,9 @@ class GeoBlockingKernelRequestListener
 
         $visitorAddress = $request->getClientIp();
 
+        $this->logger->info("azine_geoblocking_bundle: HEADERS");
+        $this->logger->info(print_r($request->headers->all(), true));
+
         // check if the visitors IP is a private IP => the request comes from the same subnet as the server or the server it self.
         if ($this->configParams['allowPrivateIPs']) {
             $patternForPrivateIPs = "#(^127\.0\.0\.1)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)#";
