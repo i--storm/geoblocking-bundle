@@ -1,12 +1,13 @@
-{% if loginRoute is defined %}
-<p>
-	{{ 'access.denied.for.anon.user.message.%country%' | trans({'%country%' : country }) }}
-</p>
-<p>
-	{{ 'access.denied.login.message.%loginUrl%' | trans ({'%loginUrl%' : path(loginRoute)}) | raw }}
-</p>
-{% else %}
-<p>
-	{{ 'access.denied.message.%country%' | trans({'%country%' : country }) }}
-</p>
-{% endif %}
+{#{% if loginRoute is defined %}#}
+{#<p>#}
+{#	{{ 'access.denied.for.anon.user.message.%country%' | trans({'%country%' : country }) }}#}
+{#</p>#}
+{#<p>#}
+{#	{{ 'access.denied.login.message.%loginUrl%' | trans ({'%loginUrl%' : path(loginRoute)}) | raw }}#}
+{#</p>#}
+{#{% else %}#}
+{#<p>#}
+{#	{{ 'access.denied.message.%country%' | trans({'%country%' : country }) }}#}
+{#</p>#}
+{#{% endif %}#}
+403 - Access denied
