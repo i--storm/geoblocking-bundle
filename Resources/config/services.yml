@@ -7,11 +7,11 @@ services:
             tags:
                 - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
             arguments:
-                templating:        "@templating"
-                lookupAdapter:     "@azine_geo_blocking_lookup_adapter"
-                logger:            "@logger"
-                container:         "@service_container"
-                parameters:
+                $templating:        "@templating"
+                $lookupAdapter:     "@azine_geo_blocking_lookup_adapter"
+                $logger:            "@logger"
+                $container:         "@service_container"
+                $parameters:
                     blockAnonOnly:       "%azine_geo_blocking_block_anonymouse_users_only%"
                     countryWhitelist:    "%azine_geo_blocking_countries_whitelist%"
                     countryBlacklist:    "%azine_geo_blocking_countries_blacklist%"
@@ -34,4 +34,4 @@ services:
     azine_geo_blocking.maxmind.lookup.adapter:
             class: Azine\GeoBlockingBundle\Adapter\MaxmindLookupAdapter
             arguments:
-                container:  "@service_container"
+                $container:  "@service_container"

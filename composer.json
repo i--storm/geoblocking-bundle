@@ -1,5 +1,5 @@
 {
-    "name": "azine/geoblocking-bundle",
+    "name": "istorm/geoblocking-bundle",
     "type": "symfony-bundle",
     "description": "Bundle to filter/geoblock the access of visitors to your pages by location ",
     "keywords": ["geoblocking", "country", "location"],
