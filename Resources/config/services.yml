@@ -40,4 +40,4 @@ services:
         class: Azine\GeoBlockingBundle\Adapter\Maxmind2LookupAdapter
         arguments:
             $container:  "@service_container"
-            $path: '$env(GEOIP_DATA_FILE_PATH)$'
+            $filePath: '$env(GEOIP_DATA_FILE_PATH)$'
