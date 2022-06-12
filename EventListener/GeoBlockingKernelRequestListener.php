@@ -18,6 +18,8 @@ use Azine\GeoBlockingBundle\Adapter\GeoIpLookupAdapterInterface;
 
 use Twig\Environment;
 
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+
 class GeoBlockingKernelRequestListener
 {
     private $configParams;
@@ -45,7 +47,7 @@ class GeoBlockingKernelRequestListener
     /**
      * @param GetResponseEvent $event
      */
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(RequestEvent $event)
     {
         // ignore sub-requests
         if ($event->getRequestType() == HttpKernelInterface::SUB_REQUEST) {
