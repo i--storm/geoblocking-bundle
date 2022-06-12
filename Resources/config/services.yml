@@ -7,7 +7,7 @@ services:
             tags:
                 - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
             arguments:
-                $templating:        "@templating"
+                $templating:        "@twig"
                 $lookupAdapter:     "@azine_geo_blocking_lookup_adapter"
                 $logger:            "@logger"
                 $container:         "@service_container"
