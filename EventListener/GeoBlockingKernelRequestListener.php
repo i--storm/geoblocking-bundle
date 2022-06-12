@@ -16,6 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 use Azine\GeoBlockingBundle\Adapter\GeoIpLookupAdapterInterface;
 
+use Twig\Environment;
+
 class GeoBlockingKernelRequestListener
 {
     private $configParams;
@@ -31,7 +33,7 @@ class GeoBlockingKernelRequestListener
      * @param Container                   $container
      * @param array                       $parameters
      */
-    public function __construct(EngineInterface $templating, GeoIpLookupAdapterInterface $lookupAdapter, LoggerInterface $logger, Container $container,  array $parameters)
+    public function __construct(Environment $templating, GeoIpLookupAdapterInterface $lookupAdapter, LoggerInterface $logger, Container $container,  array $parameters)
     {
         $this->configParams = $parameters;
         $this->lookUpAdapter 	= $lookupAdapter;
