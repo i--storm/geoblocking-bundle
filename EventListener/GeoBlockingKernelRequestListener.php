@@ -20,6 +20,8 @@ use Twig\Environment;
 
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
+use Geoip2\Exception\AddressNotFoundException;
+
 class GeoBlockingKernelRequestListener
 {
     private $configParams;
@@ -106,8 +108,15 @@ class GeoBlockingKernelRequestListener
 
             return;
         }
+        
+        try{
+            $country = $this->lookUpAdapter->getCountry($visitorAddress);
+        }catch(){
+            $this->logger->error("azine_geoblocking_bundle: ".$e->getMessage());
 
-        $country = $this->lookUpAdapter->getCountry($visitorAddress);
+            return;
+        }
+        
         $allowedByCountryWhiteList = array_search($country, $this->configParams['countryWhitelist'], true) === false;
         if (!$allowedByCountryWhiteList) {
             $this->logger->info("azine_geoblocking_bundle: allowed by countryWhiteList");
