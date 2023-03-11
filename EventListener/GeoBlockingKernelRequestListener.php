@@ -111,7 +111,7 @@ class GeoBlockingKernelRequestListener
         
         try{
             $country = $this->lookUpAdapter->getCountry($visitorAddress);
-        }catch(){
+        }catch(AddressNotFoundException $e){
             $this->logger->error("azine_geoblocking_bundle: ".$e->getMessage());
 
             return;
